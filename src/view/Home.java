@@ -2,12 +2,12 @@ package view;
 
 import business.RGBController;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.Objects;
 
 public class Home extends JFrame {
@@ -20,7 +20,7 @@ public class Home extends JFrame {
     private JButton bGreey;
     private JButton bBlackWhite;
     private JTextArea TABlackWhite;
-    private JButton bFocus;
+    private JSlider sFocus;
     private JLabel img;
     private JLabel imgCleans;
 
@@ -146,21 +146,23 @@ public class Home extends JFrame {
             }
         });
         getContentPane().add(bBlackWhite);
-
-        bFocus = new JButton("Focus");
-        bFocus.setBounds(20, 325, 120, 35);
-        bFocus.addActionListener(new ActionListener() {
+        //"Focus"
+        sFocus = new JSlider(0, 255, 0);
+        sFocus.setBounds(200, 380, 332, 35);
+        sFocus.setPaintLabels(true);
+        sFocus.setMajorTickSpacing(50);
+        sFocus.addChangeListener(new ChangeListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void stateChanged(ChangeEvent e) {
                 try {
-                    img.setIcon(new ImageIcon(RGBController.focus(getClass().getResource("/img/dog.jpg"))));
+                    img.setIcon(new ImageIcon(RGBController.focus(getClass().getResource("/img/dog.jpg"), sFocus.getValue())));
                     img.updateUI();
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
             }
         });
-        getContentPane().add(bFocus);
+        getContentPane().add(sFocus);
 
         img = new JLabel();
         img.setBounds(200, 55, 332, 300);

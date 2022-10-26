@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 
+import static jdk.nashorn.internal.objects.Global.undefined;
+
 public class RGBController {
 
     public static BufferedImage selectRGB(URL imagem, String RGB) throws IOException {
@@ -172,20 +174,23 @@ public class RGBController {
         return bufferedImage;
     }
 
-    public static BufferedImage focus(URL imagem) throws IOException {
+    public static BufferedImage focus(URL imagem, int focus) throws IOException {
         BufferedImage bufferedImage = ImageIO.read(imagem);
         Color cor;
 
-        for (int i = 170; i < bufferedImage.getWidth() - 120; i++) {
-            for (int j = 170; j < bufferedImage.getHeight() - 70; j++) {
+        for (int i = 0; i < bufferedImage.getWidth(); i++) {
+            for (int j = 0; j < bufferedImage.getHeight(); j++) {
 
                 cor = new Color(bufferedImage.getRGB(i, j));
                 int med = (cor.getRed() + cor.getBlue() + cor.getGreen()) / 3;
-                int pixelR = med;
-                int pixelG = med;
-                int pixelB = med;
+                if(med <= focus) {
+                    int pixelR = med;
+                    int pixelG = med;
+                    int pixelB = med;
 
-                bufferedImage.setRGB(i, j, new Color(pixelR, pixelG, pixelB).getRGB());
+                    bufferedImage.setRGB(i, j, new Color(pixelR, pixelG, pixelB).getRGB());
+                }
+
             }
         }
         return bufferedImage;
