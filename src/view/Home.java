@@ -12,6 +12,9 @@ import java.util.Objects;
 
 public class Home extends JFrame {
 
+    private JSlider sR;
+    private JSlider sG;
+    private JSlider sB;
     private JButton bGrid;
     private JButton bRead;
     private JButton bGreen;
@@ -21,6 +24,7 @@ public class Home extends JFrame {
     private JButton bBlackWhite;
     private JTextArea TABlackWhite;
     private JSlider sFocus;
+    private JSlider sFocusO;
     private JLabel img;
     private JLabel imgCleans;
 
@@ -147,7 +151,7 @@ public class Home extends JFrame {
         });
         getContentPane().add(bBlackWhite);
         //"Focus"
-        sFocus = new JSlider(0, 255, 0);
+        sFocus = new JSlider(-1, 255, 0);
         sFocus.setBounds(200, 380, 332, 35);
         sFocus.setPaintLabels(true);
         sFocus.setMajorTickSpacing(50);
@@ -155,7 +159,7 @@ public class Home extends JFrame {
             @Override
             public void stateChanged(ChangeEvent e) {
                 try {
-                    img.setIcon(new ImageIcon(RGBController.focus(getClass().getResource("/img/dog.jpg"), sFocus.getValue())));
+                    img.setIcon(new ImageIcon(RGBController.focus(getClass().getResource("/img/dog.jpg"), sFocus.getValue(), sR.getValue(), sG.getValue(), sB.getValue())));
                     img.updateUI();
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
@@ -163,6 +167,38 @@ public class Home extends JFrame {
             }
         });
         getContentPane().add(sFocus);
+
+//, sR.getValue(), sG.getValue(), sB.getValue()
+        sR = new JSlider(0, 255, 0);
+        sR.setBounds(542, 380, 332, 35);
+        sR.setPaintLabels(true);
+        getContentPane().add(sR);
+
+        sG = new JSlider(0, 255, 0);
+        sG.setBounds(542, 415, 332, 35);
+        sG.setPaintLabels(true);
+        getContentPane().add(sG);
+
+        sB = new JSlider(0, 255, 0);
+        sB.setBounds(542, 450, 332, 35);
+        sB.setPaintLabels(true);
+        getContentPane().add(sB);
+
+        sFocusO = new JSlider(-1, 70, 0);
+        sFocusO.setBounds(200, 415, 332, 35);
+        sFocusO.setPaintLabels(true);
+        sFocusO.addChangeListener    (new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                try {
+                    img.setIcon(new ImageIcon(RGBController.focusO(getClass().getResource("/img/dog.jpg"), sFocusO.getValue(), sR.getValue(), sG.getValue(), sB.getValue())));
+                    img.updateUI();
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        });
+        getContentPane().add(sFocusO);
 
         img = new JLabel();
         img.setBounds(200, 55, 332, 300);

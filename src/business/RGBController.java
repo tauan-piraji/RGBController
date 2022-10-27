@@ -97,11 +97,8 @@ public class RGBController {
 
                 cor = new Color(bufferedImage.getRGB(i, j));
                 int med = (cor.getRed() + cor.getBlue() + cor.getGreen()) / 3;
-                int pixelR = med;
-                int pixelG = med;
-                int pixelB = med;
 
-                bufferedImage.setRGB(i, j, new Color(pixelR, pixelG, pixelB).getRGB());
+                bufferedImage.setRGB(i, j, new Color(med, med, med).getRGB());
             }
         }
         return bufferedImage;
@@ -118,9 +115,6 @@ public class RGBController {
 
                 cor = new Color(bufferedImage.getRGB(i, j));
                 int med = (cor.getRed() + cor.getBlue() + cor.getGreen()) / 3;
-                int pixelR = med;
-                int pixelG = med;
-                int pixelB = med;
                 int X = 0;
                 switch (Integer.parseInt(layers)) {
                     case 2:
@@ -164,17 +158,14 @@ public class RGBController {
                         }
                         break;
                 }
-                pixelR = X;
-                pixelG = X;
-                pixelB = X;
 
-                bufferedImage.setRGB(i, j, new Color(pixelR, pixelG, pixelB).getRGB());
+                bufferedImage.setRGB(i, j, new Color(X, X, X).getRGB());
             }
         }
         return bufferedImage;
     }
 
-    public static BufferedImage focus(URL imagem, int focus) throws IOException {
+    public static BufferedImage focus(URL imagem, int focus, int R, int G, int B) throws IOException {
         BufferedImage bufferedImage = ImageIO.read(imagem);
         Color cor;
 
@@ -184,15 +175,49 @@ public class RGBController {
                 cor = new Color(bufferedImage.getRGB(i, j));
                 int med = (cor.getRed() + cor.getBlue() + cor.getGreen()) / 3;
                 if(med <= focus) {
-                    int pixelR = med;
-                    int pixelG = med;
-                    int pixelB = med;
-
-                    bufferedImage.setRGB(i, j, new Color(pixelR, pixelG, pixelB).getRGB());
+                    bufferedImage.setRGB(i, j, new Color(R, G, B).getRGB());
                 }
 
             }
         }
+        return bufferedImage;
+    }
+
+    public static BufferedImage focusO(URL imagem, int focus, int R, int G, int B) throws IOException {
+        BufferedImage bufferedImage = ImageIO.read(imagem);
+        Color cor;
+
+        for (int i = 170; i < bufferedImage.getWidth() -120; i++) {
+            for (int j = 170; j < bufferedImage.getHeight() - 80; j++) {
+                cor = new Color(bufferedImage.getRGB(i, j));
+                int med = (cor.getRed() + cor.getBlue() + cor.getGreen()) / 3;
+                if(med <= focus) {
+                    bufferedImage.setRGB(i, j, new Color(R, G, B).getRGB());
+                }
+            }
+        }
+
+        for (int i = 120; i < bufferedImage.getWidth() -170; i++) {
+            for (int j = 120; j < bufferedImage.getHeight() - 150; j++) {
+                cor = new Color(bufferedImage.getRGB(i, j));
+                int med = (cor.getRed() + cor.getBlue() + cor.getGreen()) / 3;
+                if(med <= focus) {
+                    bufferedImage.setRGB(i, j, new Color(R, G, B).getRGB());
+                }
+            }
+        }
+
+        for (int i = 210; i < bufferedImage.getWidth() -80; i++) {
+            for (int j = 120; j < bufferedImage.getHeight() - 150; j++) {
+                cor = new Color(bufferedImage.getRGB(i, j));
+                int med = (cor.getRed() + cor.getBlue() + cor.getGreen()) / 3;
+                if(med <= focus) {
+                    bufferedImage.setRGB(i, j, new Color(R, G, B).getRGB());
+                }
+            }
+        }
+
+
         return bufferedImage;
     }
 }
